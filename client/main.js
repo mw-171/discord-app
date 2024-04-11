@@ -15,6 +15,7 @@ setupDiscordSdk().then(() => {
 
   appendVoiceChannelName();
   appendGuildAvatar();
+  appendInCallParticipants();
   // We can now make API calls within the scopes we requested in setupDiscordSDK()
   // Note: the access_token returned is a sensitive secret and should be treated as such
 });
@@ -85,7 +86,7 @@ async function appendVoiceChannelName() {
   app.appendChild(textTag);
 }
 
-async function appendGuildAvatar() {
+async function appendGuildAvatar() { //a guild is a server in api terms
   const app = document.querySelector('#app');
 
   // 1. From the HTTP API fetch a list of all of the user's guilds
@@ -113,4 +114,29 @@ async function appendGuildAvatar() {
     guildImg.setAttribute('style', 'border-radius: 50%;');
     app.appendChild(guildImg);
   }
+}
+
+async function appendInCallParticipants() {
+        const app = document.querySelector('#app');
+
+        const testElement = document.createElement('div');
+        testElement.textContent = 'Function was called';
+        app.appendChild(testElement);
+
+        const participants = await discordSdk.commands.getInstanceConnectedParticipants();
+        for (const participant of participants) {
+            const user = await discordSdk.users.get(participant.userId);
+            const userElement1 = document.createElement('div');
+            userElement1.textContent = 'users' + user.username;
+            app.appendChild(userElement1);
+        }
+        const voiceStates = await discordSdk.guilds.get(discordSdk.guildId).getVoiceStates();
+    
+        for (const voiceState of voiceStates) {
+            const user = await discordSdk.users.get(voiceState.userId);
+    
+            const userElement = document.createElement('div');
+            userElement.textContent = 'users' + user.username;
+            app.appendChild(userElement);
+        }
 }
