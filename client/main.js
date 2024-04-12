@@ -125,6 +125,7 @@ async function appendInCallParticipants() {
 
   const participants =
     await discordSdk.commands.getInstanceConnectedParticipants();
+
   const connectedParticipants = document.createElement("div");
   connectedParticipants.textContent =
     "hmm: " + participants.username + " " + participants.id; //why are thgese undefined??
@@ -134,15 +135,4 @@ async function appendInCallParticipants() {
   //     userElement1.textContent = 'users' + participant.username;
   //     app.appendChild(userElement1);
   // }
-  const voiceStates = await discordSdk.guilds
-    .get(discordSdk.guildId)
-    .getVoiceStates();
-
-  for (const voiceState of voiceStates) {
-    const user = await discordSdk.users.get(voiceState.userId);
-
-    const userElement = document.createElement("div");
-    userElement.textContent = "users" + user.username;
-    app.appendChild(userElement);
-  }
 }
