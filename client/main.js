@@ -128,11 +128,12 @@ async function appendInCallParticipants() {
 
   const connectedParticipants = document.createElement("div");
   connectedParticipants.textContent =
-    "hmm: " + participants.username + " " + participants.id; //why are thgese undefined??
+    "hmm: " + participants.username + " " + participants.id;
   app.appendChild(connectedParticipants);
-  // for (const participant of participants) {
-  //     const userElement1 = document.createElement('div');
-  //     userElement1.textContent = 'users' + participant.username;
-  //     app.appendChild(userElement1);
-  // }
+  for (const participant of participants) {
+    //not entering the array for some rzn
+    const userElement1 = document.createElement("div");
+    userElement1.textContent = "users" + participant.username;
+    app.appendChild(userElement1);
+  }
 }
